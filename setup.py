@@ -1,0 +1,42 @@
+from os.path import abspath, dirname, join, normpath
+
+from setuptools import setup
+
+requires = []
+
+setup(
+    # Basic package information:
+    name='http-basic-auth',
+    version='0.0.0',
+    py_modules=('http_basic_auth',),
+
+    # Packaging options:
+    zip_safe=False,
+    include_package_data=True,
+
+    classifiers=[
+        'License :: BSD',
+        'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.5',
+        'Programming Language :: Python :: 3.6',
+    ],
+
+    # Package dependencies:
+    test_suite="pytest",
+    requires=requires,
+    tests_require=requires + [pytest],
+    setup_requires=requires,
+    install_requires=requires,
+
+    # Metadata for PyPI:
+    author='Georgy Bazhukov',
+    author_email='georgy.bazhukov@gmail.com',
+    license='BSD',
+    url='https://github.com/bugov/http-basic-auth',
+    keywords='security basic auth http',
+    description='HTTP Basic Auth implementation',
+    long_description=open(
+        normpath(join(dirname(abspath(__file__)), 'README.md')), encoding='utf-8'
+    ).read()
+)
