@@ -9,6 +9,12 @@ Also it supports only RFC-2617, but RFC-7617 is actual.
 I want to implement full HTTP Basic Auth protocol, but I'll start from
 RFC-2617 version.
 
+# Install
+
+```bash
+pip3 install http-basic-auth
+```
+
 # Non-latin symbols
 
 I check it via
@@ -44,7 +50,14 @@ And even
 All it works fine, if you define your charset
 
 ```python
-from http_basic_auth import generate_basic_auth_token
-token = generate_basic_auth_token('😁', 'пар:öль', coding='utf-8')
+from http_basic_auth import generate_basic_auth_header
+token = generate_basic_auth_header('😁', 'пар:öль', coding='utf-8')
 assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == token
 ```
+
+# Provides functions
+
+- `generate_basic_auth_header`: (user, password) → "Basic <token>"
+- `parse_basic_auth_header`: "Basic <token> → (user, password)"
+- `generate_basic_auth_token`: (user, password) → "<token>"
+- `parse_basic_auth_token`: "<token> → (user, password)"

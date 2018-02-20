@@ -10,7 +10,7 @@ from http_basic_auth import parse_basic_auth_token, generate_basic_auth_token, B
     ('bmFtZTp9e3NkYXNkJyI=', ('name', '}{sdasd\'\"')),
 ])
 def test_token_parse(token, expect):
-    assert parse_basic_auth_token(token) == expect
+    assert parse_basic_auth_token(token, coding='ascii') == expect
 
 
 @pytest.mark.parametrize("token", [
@@ -22,7 +22,7 @@ def test_token_parse(token, expect):
 ])
 def test_wrong_token_parse(token):
     with pytest.raises(BasicAuthTokenException):
-        parse_basic_auth_token(token)
+        parse_basic_auth_token(token, coding='ascii')
 
 
 @pytest.mark.parametrize("token,login_password", [
@@ -32,7 +32,7 @@ def test_wrong_token_parse(token):
     ('bmFtZTp9e3NkYXNkJyI=', ('name', '}{sdasd\'\"')),
 ])
 def test_token_gen(token, login_password):
-    assert token == generate_basic_auth_token(*login_password)
+    assert token == generate_basic_auth_token(*login_password, coding='ascii')
 
 
 @pytest.mark.parametrize("login_password", [
@@ -45,4 +45,4 @@ def test_token_gen(token, login_password):
 ])
 def test_wrong_token_gen(login_password):
     with pytest.raises(BasicAuthTokenException):
-        generate_basic_auth_token(*login_password)
+        generate_basic_auth_token(*login_password, coding='ascii')
