@@ -1,5 +1,9 @@
 # http-basic-auth
 
+[![build-status-image]][travis]
+[![pypi-version]][pypi]
+
+
 Yep, it's one more HTTP Basic Auth python lib. The second. And I tried
 to use the first, but it had a bug (which I fixed) and... completely
 wrong realisation of non-latin encoding/decoding.
@@ -15,7 +19,7 @@ RFC-2617 version.
 pip3 install http-basic-auth
 ```
 
-# Non-latin symbols
+# 💔絵 Non-latin symbols
 
 I check it via
 
@@ -50,9 +54,11 @@ And even
 All it works fine, if you define your charset
 
 ```python
-from http_basic_auth import generate_basic_auth_header
-token = generate_basic_auth_header('😁', 'пар:öль', coding='utf-8')
-assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == token
+from http_basic_auth import generate_basic_auth_header, parse_basic_auth_header
+
+
+assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == generate_basic_auth_header('😁', 'пар:öль', coding='utf-8')
+assert ('😁', 'пар:öль') == parse_basic_auth_header("Basic 8J+YgTrQv9Cw0YA6w7bQu9GM", coding='utf-8')
 ```
 
 # Provides functions
