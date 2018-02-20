@@ -1,8 +1,5 @@
 # http-basic-auth
 
-[![build-status-image]][travis]
-[![pypi-version]][pypi]
-
 
 Yep, it's one more HTTP Basic Auth python lib. The second. And I tried
 to use the first, but it had a bug (which I fixed) and... completely
@@ -64,6 +61,6 @@ assert ('😁', 'пар:öль') == parse_basic_auth_header("Basic 8J+YgTrQv9Cw0
 # Provides functions
 
 - `generate_basic_auth_header`: `(user, password) → "Basic <token>"`
-- `parse_basic_auth_header`: `"Basic <token> → (user, password)"`
+- `parse_basic_auth_header`: `"Basic <token>" → (user, password)`
 - `generate_basic_auth_token`: `(user, password) → "<token>"`
-- `parse_basic_auth_token`: `"<token> → (user, password)"`
+- `parse_basic_auth_token`: `"<token>" → (user, password)`
