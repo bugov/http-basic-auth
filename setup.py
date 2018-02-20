@@ -23,10 +23,9 @@ setup(
     ],
 
     # Package dependencies:
-    test_suite="pytest",
     requires=requires,
-    tests_require=requires + [pytest],
-    setup_requires=requires,
+    tests_require=requires + ["pytest"],
+    setup_requires=requires + ["pytest-runner"],
     install_requires=requires,
 
     # Metadata for PyPI:
