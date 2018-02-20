@@ -2,12 +2,14 @@ from os.path import abspath, dirname, join, normpath
 
 from setuptools import setup
 
+from http_basic_auth import __version__
+
 requires = []
 
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='0.0.0',
+    version=__version__,
     py_modules=('http_basic_auth',),
 
     # Packaging options:
