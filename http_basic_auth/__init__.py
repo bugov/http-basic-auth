@@ -1,18 +1,18 @@
 import base64
 
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 
 class BasicAuthTokenException(Exception):
     pass
 
 
-def parse_basic_auth_token(token) -> (str, str):
+def parse_basic_auth_token(token: str, coding='ascii') -> (str, str):
     """
     Get login + password tuple from Basic Auth token.
     """
     try:
-        b_token = bytes(token, encoding='ascii')
+        b_token = bytes(token, encoding=coding)
     except UnicodeEncodeError as e:
         raise BasicAuthTokenException from e
     except TypeError as e:
@@ -28,16 +28,16 @@ def parse_basic_auth_token(token) -> (str, str):
     except ValueError as e:
         raise BasicAuthTokenException from e
 
-    return str(login, encoding='ascii'), str(password, encoding='ascii')
+    return str(login, encoding=coding), str(password, encoding=coding)
 
 
-def generate_basic_auth_token(login: str, password: str) -> str:
+def generate_basic_auth_token(login: str, password: str, coding='ascii') -> str:
     """
     Generate Basic Auth token from login and password
     """
     try:
-        b_login = bytes(login, encoding='ascii')
-        b_password = bytes(password, encoding='ascii')
+        b_login = bytes(login, encoding=coding)
+        b_password = bytes(password, encoding=coding)
     except UnicodeEncodeError as e:
         raise BasicAuthTokenException from e
     except TypeError as e:
@@ -48,4 +48,4 @@ def generate_basic_auth_token(login: str, password: str) -> str:
 
     b_token = base64.b64encode(b'%b:%b' % (b_login, b_password))
 
-    return str(b_token, encoding='ascii')
+    return str(b_token, encoding=coding)

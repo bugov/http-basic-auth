@@ -1,5 +1,3 @@
-import base64
-
 import pytest
 
 from http_basic_auth import parse_basic_auth_token, generate_basic_auth_token, BasicAuthTokenException
@@ -9,6 +7,7 @@ from http_basic_auth import parse_basic_auth_token, generate_basic_auth_token, B
     ('dGVzdDpzZWNyZXQ=', ('test', 'secret')),
     ('dGVzdDpzZWNyZXQx', ('test', 'secret1')),
     ('dGVzdDpzZWM6cmV0MQ==', ('test', 'sec:ret1')),
+    ('bmFtZTp9e3NkYXNkJyI=', ('name', '}{sdasd\'\"')),
 ])
 def test_token_parse(token, expect):
     assert parse_basic_auth_token(token) == expect
@@ -30,6 +29,7 @@ def test_wrong_token_parse(token):
     ('dGVzdDpzZWNyZXQ=', ('test', 'secret')),
     ('dGVzdDpzZWNyZXQx', ('test', 'secret1')),
     ('dGVzdDpzZWM6cmV0MQ==', ('test', 'sec:ret1')),
+    ('bmFtZTp9e3NkYXNkJyI=', ('name', '}{sdasd\'\"')),
 ])
 def test_token_gen(token, login_password):
     assert token == generate_basic_auth_token(*login_password)

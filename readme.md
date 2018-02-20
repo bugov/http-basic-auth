@@ -8,3 +8,43 @@ Also it supports only RFC-2617, but RFC-7617 is actual.
 
 I want to implement full HTTP Basic Auth protocol, but I'll start from
 RFC-2617 version.
+
+# Non-latin symbols
+
+I check it via
+
+```bash
+→ curl --user name:пароль https://httpbin.org/headers
+{
+  "headers": {
+    "Accept": "*/*", 
+    "Authorization": "Basic bmFtZTrQv9Cw0YDQvtC70Yw=", 
+    "Connection": "close", 
+    "Host": "httpbin.org", 
+    "User-Agent": "curl/7.54.0"
+  }
+}
+```
+
+And even
+
+```bash
+→ curl --user 😁:пар:öль https://httpbin.org/headers
+{
+  "headers": {
+    "Accept": "*/*", 
+    "Authorization": "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM", 
+    "Connection": "close", 
+    "Host": "httpbin.org", 
+    "User-Agent": "curl/7.54.0"
+  }
+}
+```
+
+All it works fine, if you define your charset
+
+```python
+from http_basic_auth import generate_basic_auth_token
+token = generate_basic_auth_token('😁', 'пар:öль', coding='utf-8')
+assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == token
+```
