@@ -57,7 +57,7 @@ assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == token
 
 # Provides functions
 
-- `generate_basic_auth_header`: (user, password) → "Basic <token>"
-- `parse_basic_auth_header`: "Basic <token> → (user, password)"
-- `generate_basic_auth_token`: (user, password) → "<token>"
-- `parse_basic_auth_token`: "<token> → (user, password)"
+- `generate_basic_auth_header`: `(user, password) → "Basic <token>"`
+- `parse_basic_auth_header`: `"Basic <token> → (user, password)"`
+- `generate_basic_auth_token`: `(user, password) → "<token>"`
+- `parse_basic_auth_token`: `"<token> → (user, password)"`
