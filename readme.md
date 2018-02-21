@@ -1,6 +1,8 @@
 # http-basic-auth
 
 
+[![Build Status](https://travis-ci.org/bugov/http-basic-auth.svg?branch=master)](https://travis-ci.org/bugov/http-basic-auth)
+
 Yep, it's one more HTTP Basic Auth python lib. The second. And I tried
 to use the first, but it had a bug (which I fixed) and... completely
 wrong realisation of non-latin encoding/decoding.
