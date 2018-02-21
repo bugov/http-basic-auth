@@ -7,7 +7,7 @@ requires = []
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='1.0.1',
+    version='1.0.2',
     py_modules=('http_basic_auth',),
 
     # Packaging options:
@@ -35,6 +35,6 @@ setup(
     keywords='security basic auth http',
     description='HTTP Basic Auth implementation',
     long_description=open(
-        normpath(join(dirname(abspath(__file__)), 'README.md')), encoding='utf-8'
+        normpath(join(dirname(abspath(__file__)), 'readme.md')), encoding='utf-8'
     ).read()
 )
