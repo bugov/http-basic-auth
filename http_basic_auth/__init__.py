@@ -4,7 +4,7 @@ HTTP Basic Auth python lib
 
 import base64
 
-__version__ = '1.0.2'
+__version__ = '1.0.3'
 
 
 class BasicAuthTokenException(Exception):
