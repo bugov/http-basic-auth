@@ -4,16 +4,16 @@ HTTP Basic Auth python lib
 
 import base64
 
-__version__ = '1.0.3'
+__version__ = '1.1.0'
 
 
 class BasicAuthException(Exception):
-    pass
-
-
-def parse_token(token: str, coding='ascii') -> (str, str):
+    """General exception for all http-basic-auth problems
     """
-    Get login + password tuple from Basic Auth token.
+
+
+def parse_token(token: str, coding='utf-8') -> (str, str):
+    """Get login + password tuple from Basic Auth token.
     """
     try:
         b_token = bytes(token, encoding=coding)
@@ -35,9 +35,8 @@ def parse_token(token: str, coding='ascii') -> (str, str):
     return str(login, encoding=coding), str(password, encoding=coding)
 
 
-def generate_token(login: str, password: str, coding='ascii') -> str:
-    """
-    Generate Basic Auth token from login and password
+def generate_token(login: str, password: str, coding='utf-8') -> str:
+    """Generate Basic Auth token from login and password
     """
     try:
         b_login = bytes(login, encoding=coding)
@@ -55,9 +54,8 @@ def generate_token(login: str, password: str, coding='ascii') -> str:
     return str(b_token, encoding=coding)
 
 
-def parse_header(header_value: str, coding='ascii') -> (str, str):
-    """
-    Get login + password tuple from Basic Auth header value.
+def parse_header(header_value: str, coding='utf-8') -> (str, str):
+    """Get login + password tuple from Basic Auth header value.
     """
     if header_value is None:
         raise BasicAuthException
@@ -73,8 +71,7 @@ def parse_header(header_value: str, coding='ascii') -> (str, str):
     return parse_token(token, coding=coding)
 
 
-def generate_header(login: str, password: str, coding='ascii') -> str:
-    """
-    Generate Basic Auth header value from login and password
+def generate_header(login: str, password: str, coding='utf-8') -> str:
+    """Generate Basic Auth header value from login and password
     """
     return 'Basic %s' % generate_token(login, password, coding=coding)

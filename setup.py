@@ -12,7 +12,7 @@ def read(fname):
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='1.0.3',
+    version='1.1.0',
     py_modules=('http_basic_auth',),
 
     # Packaging options:

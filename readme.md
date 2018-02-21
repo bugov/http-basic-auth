@@ -7,16 +7,17 @@ Yep, it's one more HTTP Basic Auth python lib. The second. And I tried
 to use the first, but it had a bug (which I fixed) and... completely
 wrong realisation of non-latin encoding/decoding.
 
-Also it supports only RFC-2617, but RFC-7617 is actual.
-
-I want to implement full HTTP Basic Auth protocol, but I'll start from
-RFC-2617 version.
-
 # Install
 
 ```bash
 pip3 install http-basic-auth
 ```
+
+# ♥️ RFC
+
+It supports only RFC-2617 (RFC-7617 planning).
+
+If you find some mistake – please write to [issue list 🐨](https://github.com/bugov/http-basic-auth/issues).
 
 # ♥️ Non-latin symbols
 
@@ -50,14 +51,14 @@ And even
 }
 ```
 
-All it works fine, if you define your charset
+All works well
 
 ```python
 from http_basic_auth import generate_header, parse_header
 
 
-assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == generate_header('😁', 'пар:öль', coding='utf-8')
-assert ('😁', 'пар:öль') == parse_header("Basic 8J+YgTrQv9Cw0YA6w7bQu9GM", coding='utf-8')
+assert "Basic 8J+YgTrQv9Cw0YA6w7bQu9GM" == generate_header('😁', 'пар:öль')
+assert ('😁', 'пар:öль') == parse_header("Basic 8J+YgTrQv9Cw0YA6w7bQu9GM")
 ```
 
 # Provides functions
