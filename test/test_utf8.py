@@ -1,6 +1,6 @@
 import pytest
 
-from http_basic_auth import parse_basic_auth_token, generate_basic_auth_token, BasicAuthTokenException
+from http_basic_auth import parse_token, generate_token, BasicAuthException
 
 
 @pytest.mark.parametrize("token,expect", [
@@ -9,7 +9,7 @@ from http_basic_auth import parse_basic_auth_token, generate_basic_auth_token, B
     ('8J+YgTrQv9Cw0YA6w7bQu9GM', ('😁', 'пар:öль')),
 ])
 def test_token_parse(token, expect):
-    assert parse_basic_auth_token(token, coding='utf-8') == expect
+    assert parse_token(token, coding='utf-8') == expect
 
 
 @pytest.mark.parametrize("token,login_password", [
@@ -18,4 +18,4 @@ def test_token_parse(token, expect):
     ('8J+YgTrQv9Cw0YA6w7bQu9GM', ('😁', 'пар:öль')),
 ])
 def test_token_gen(token, login_password):
-    assert token == generate_basic_auth_token(*login_password, coding='utf-8')
+    assert token == generate_token(*login_password, coding='utf-8')

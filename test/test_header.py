@@ -1,6 +1,6 @@
 import pytest
 
-from http_basic_auth import parse_basic_auth_header, generate_basic_auth_header, BasicAuthTokenException
+from http_basic_auth import parse_header, generate_header, BasicAuthException
 
 
 @pytest.mark.parametrize("token,expect", [
@@ -11,7 +11,7 @@ from http_basic_auth import parse_basic_auth_header, generate_basic_auth_header,
     ('Basic 8J+YgTrQv9Cw0YA6w7bQu9GM', ('😁', 'пар:öль')),
 ])
 def test_header_parse(token, expect):
-    assert parse_basic_auth_header(token, coding='utf-8') == expect
+    assert parse_header(token, coding='utf-8') == expect
 
 
 @pytest.mark.parametrize("token", [
@@ -21,8 +21,8 @@ def test_header_parse(token, expect):
     (None,),
 ])
 def test_wrong_header_parse(token):
-    with pytest.raises(BasicAuthTokenException):
-        parse_basic_auth_header(token, coding='utf-8')
+    with pytest.raises(BasicAuthException):
+        parse_header(token, coding='utf-8')
 
 
 @pytest.mark.parametrize("token,login_password", [
@@ -33,4 +33,4 @@ def test_wrong_header_parse(token):
     ('Basic 8J+YgTrQv9Cw0YA6w7bQu9GM', ('😁', 'пар:öль')),
 ])
 def test_header_gen(token, login_password):
-    assert token == generate_basic_auth_header(*login_password, coding='utf-8')
+    assert token == generate_header(*login_password, coding='utf-8')
