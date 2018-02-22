@@ -14,15 +14,17 @@ def test_header_parse(token, expect):
     assert parse_header(token, coding='utf-8') == expect
 
 
-@pytest.mark.parametrize("token", [
-    ('BasicdGVzdDpzZWNyZXQ=',),
-    ('BASI dGVzdDpzZWNyZXQx',),
-    ('dGVzdDpzZWM6cmV0MQ==',),
-    (None,),
+@pytest.mark.parametrize("header", [
+    '',
+    'BasicdGVzdDpzZWNyZXQ=',
+    'BASI dGVzdDpzZWNyZXQx',
+    'dGVzdDpzZWM6cmV0MQ==',
+    None,
+    1,
 ])
-def test_wrong_header_parse(token):
+def test_wrong_header_parse(header):
     with pytest.raises(BasicAuthException):
-        parse_header(token, coding='utf-8')
+        parse_header(header, coding='utf-8')
 
 
 @pytest.mark.parametrize("token,login_password", [

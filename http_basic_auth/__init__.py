@@ -4,7 +4,7 @@ HTTP Basic Auth python lib
 
 import base64
 
-__version__ = '1.1.3'
+__version__ = '1.2.0'
 
 
 class BasicAuthException(Exception):
@@ -23,7 +23,7 @@ def parse_token(token: str, coding='utf-8') -> (str, str):
         raise BasicAuthException from e
 
     try:
-        auth_pair = base64.b64decode(b_token)
+        auth_pair = base64.b64decode(b_token, validate=True)
     except base64.binascii.Error as e:
         raise BasicAuthException from e
 
@@ -32,7 +32,10 @@ def parse_token(token: str, coding='utf-8') -> (str, str):
     except ValueError as e:
         raise BasicAuthException from e
 
-    return str(login, encoding=coding), str(password, encoding=coding)
+    try:
+        return str(login, encoding=coding), str(password, encoding=coding)
+    except UnicodeDecodeError as e:
+        raise BasicAuthException from e
 
 
 def generate_token(login: str, password: str, coding='utf-8') -> str:
@@ -63,6 +66,8 @@ def parse_header(header_value: str, coding='utf-8') -> (str, str):
     try:
         basic_prefix, token = header_value.strip().split(maxsplit=1)
     except AttributeError as e:
+        raise BasicAuthException from e
+    except ValueError as e:
         raise BasicAuthException from e
 
     if basic_prefix.lower() != 'basic':

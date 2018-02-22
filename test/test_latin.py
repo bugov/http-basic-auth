@@ -14,12 +14,12 @@ def test_token_parse(token, expect):
 
 
 @pytest.mark.parametrize("token", [
-    ('dGVzdDp}{zZWNyZXQ=',),  # not base64 symbols
-    (None,),
-    (True,),
-    ('тест®',),     # non-latin
-    ('dGVzdA==',),  # no ":" in encoded string
-    ('8J+YgTrQv9Cw0YA6w7bQu9GM',),  # utf8 inside
+    'dGVzdDp}{zZWNyZXQ=',  # not base64 symbols
+    None,
+    True,
+    'тест®',     # non-latin
+    'dGVzdA==',  # no ":" in encoded string
+    '8J+YgTrQv9Cw0YA6w7bQu9GM',  # utf8 inside
 ])
 def test_wrong_token_parse(token):
     with pytest.raises(BasicAuthException):
