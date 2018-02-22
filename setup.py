@@ -12,12 +12,13 @@ def read(fname):
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='1.1.2',
+    version='1.1.3',
     py_modules=('http_basic_auth',),
 
     # Packaging options:
     zip_safe=False,
     include_package_data=True,
+    packages=('http_basic_auth',),
 
     classifiers=[
         'Intended Audience :: Developers',
