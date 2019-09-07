@@ -18,7 +18,7 @@ def read(file_name: str) -> str:
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='1.2.1',
+    version='2.0.0',
     py_modules=('http_basic_auth',),
 
     # Packaging options:
@@ -31,7 +31,6 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],

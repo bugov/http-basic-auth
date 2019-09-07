@@ -11,11 +11,11 @@ class BasicAuthException(Exception):
     """
 
 
-def parse_token(token: str, coding='utf-8') -> Tuple[str, str]:
+def parse_token(token: str, encoding='utf-8') -> Tuple[str, str]:
     """Get login + password tuple from Basic Auth token.
     """
     try:
-        token_as_bytes = bytes(token, encoding=coding)
+        token_as_bytes = bytes(token, encoding=encoding)
     except UnicodeEncodeError as exc:
         raise BasicAuthException from exc
     except TypeError as exc:
@@ -32,17 +32,17 @@ def parse_token(token: str, coding='utf-8') -> Tuple[str, str]:
         raise BasicAuthException from exc
 
     try:
-        return str(login, encoding=coding), str(password, encoding=coding)
+        return str(login, encoding=encoding), str(password, encoding=encoding)
     except UnicodeDecodeError as exc:
         raise BasicAuthException from exc
 
 
-def generate_token(login: str, password: str, coding='utf-8') -> str:
+def generate_token(login: str, password: str, encoding='utf-8') -> str:
     """Generate Basic Auth token from login and password
     """
     try:
-        login_as_bytes = bytes(login, encoding=coding)
-        password_as_bytes = bytes(password, encoding=coding)
+        login_as_bytes = bytes(login, encoding=encoding)
+        password_as_bytes = bytes(password, encoding=encoding)
     except UnicodeEncodeError as exc:
         raise BasicAuthException from exc
     except TypeError as exc:
@@ -55,10 +55,10 @@ def generate_token(login: str, password: str, coding='utf-8') -> str:
         b'%b:%b' % (login_as_bytes, password_as_bytes)
     )
 
-    return str(token, encoding=coding)
+    return str(token, encoding=encoding)
 
 
-def parse_header(header_value: str, coding='utf-8') -> Tuple[str, str]:
+def parse_header(header_value: str, encoding='utf-8') -> Tuple[str, str]:
     """Get login + password tuple from Basic Auth header value.
     """
     if header_value is None:
@@ -74,10 +74,10 @@ def parse_header(header_value: str, coding='utf-8') -> Tuple[str, str]:
     if basic_prefix.lower() != 'basic':
         raise BasicAuthException
 
-    return parse_token(token, coding=coding)
+    return parse_token(token, encoding=encoding)
 
 
-def generate_header(login: str, password: str, coding='utf-8') -> str:
+def generate_header(login: str, password: str, encoding='utf-8') -> str:
     """Generate Basic Auth header value from login and password
     """
-    return 'Basic %s' % generate_token(login, password, coding=coding)
+    return 'Basic %s' % generate_token(login, password, encoding=encoding)
