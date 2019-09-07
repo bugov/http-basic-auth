@@ -1,11 +1,13 @@
+dist: xenial   # for Py >= 3.7
 language: python
 python:
-  - "3.5"
-  - "3.5-dev"
   - "3.6"
   - "3.6-dev"
+  - "3.7"
   - "3.7-dev"
+  - "3.8-dev"
 install:
-  - pip install -r requirements.txt
+  - pip install -r requirements-dev.txt
 script:
   - python setup.py test
+  - mypy --ignore-missing-imports http_basic_auth setup.py

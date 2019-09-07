@@ -3,8 +3,7 @@ HTTP Basic Auth python lib
 """
 
 import base64
-
-__version__ = '1.2.0'
+from typing import Tuple
 
 
 class BasicAuthException(Exception):
@@ -12,52 +11,54 @@ class BasicAuthException(Exception):
     """
 
 
-def parse_token(token: str, coding='utf-8') -> (str, str):
+def parse_token(token: str, encoding='utf-8') -> Tuple[str, str]:
     """Get login + password tuple from Basic Auth token.
     """
     try:
-        b_token = bytes(token, encoding=coding)
-    except UnicodeEncodeError as e:
-        raise BasicAuthException from e
-    except TypeError as e:
-        raise BasicAuthException from e
+        token_as_bytes = bytes(token, encoding=encoding)
+    except UnicodeEncodeError as exc:
+        raise BasicAuthException from exc
+    except TypeError as exc:
+        raise BasicAuthException from exc
 
     try:
-        auth_pair = base64.b64decode(b_token, validate=True)
-    except base64.binascii.Error as e:
-        raise BasicAuthException from e
+        auth_pair = base64.b64decode(token_as_bytes, validate=True)
+    except base64.binascii.Error as exc:
+        raise BasicAuthException from exc
 
     try:
-        (login, password) = auth_pair.split(b':', maxsplit=1)
-    except ValueError as e:
-        raise BasicAuthException from e
+        login, password = auth_pair.split(b':', maxsplit=1)
+    except ValueError as exc:
+        raise BasicAuthException from exc
 
     try:
-        return str(login, encoding=coding), str(password, encoding=coding)
-    except UnicodeDecodeError as e:
-        raise BasicAuthException from e
+        return str(login, encoding=encoding), str(password, encoding=encoding)
+    except UnicodeDecodeError as exc:
+        raise BasicAuthException from exc
 
 
-def generate_token(login: str, password: str, coding='utf-8') -> str:
+def generate_token(login: str, password: str, encoding='utf-8') -> str:
     """Generate Basic Auth token from login and password
     """
     try:
-        b_login = bytes(login, encoding=coding)
-        b_password = bytes(password, encoding=coding)
-    except UnicodeEncodeError as e:
-        raise BasicAuthException from e
-    except TypeError as e:
-        raise BasicAuthException from e
+        login_as_bytes = bytes(login, encoding=encoding)
+        password_as_bytes = bytes(password, encoding=encoding)
+    except UnicodeEncodeError as exc:
+        raise BasicAuthException from exc
+    except TypeError as exc:
+        raise BasicAuthException from exc
 
-    if b':' in b_login:
+    if b':' in login_as_bytes:
         raise BasicAuthException
 
-    b_token = base64.b64encode(b'%b:%b' % (b_login, b_password))
+    token: bytes = base64.b64encode(
+        b'%b:%b' % (login_as_bytes, password_as_bytes)
+    )
 
-    return str(b_token, encoding=coding)
+    return str(token, encoding=encoding)
 
 
-def parse_header(header_value: str, coding='utf-8') -> (str, str):
+def parse_header(header_value: str, encoding='utf-8') -> Tuple[str, str]:
     """Get login + password tuple from Basic Auth header value.
     """
     if header_value is None:
@@ -65,18 +66,18 @@ def parse_header(header_value: str, coding='utf-8') -> (str, str):
 
     try:
         basic_prefix, token = header_value.strip().split(maxsplit=1)
-    except AttributeError as e:
-        raise BasicAuthException from e
-    except ValueError as e:
-        raise BasicAuthException from e
+    except AttributeError as exc:
+        raise BasicAuthException from exc
+    except ValueError as exc:
+        raise BasicAuthException from exc
 
     if basic_prefix.lower() != 'basic':
         raise BasicAuthException
 
-    return parse_token(token, coding=coding)
+    return parse_token(token, encoding=encoding)
 
 
-def generate_header(login: str, password: str, coding='utf-8') -> str:
+def generate_header(login: str, password: str, encoding='utf-8') -> str:
     """Generate Basic Auth header value from login and password
     """
-    return 'Basic %s' % generate_token(login, password, coding=coding)
+    return 'Basic %s' % generate_token(login, password, encoding=encoding)

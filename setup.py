@@ -1,18 +1,24 @@
 import os
-
 from setuptools import setup
+from typing import List
 
-requires = []
+requires: List[str] = []
 
 
-def read(fname):
-    return open(os.path.join(os.path.dirname(__file__), fname), encoding='utf-8').read()
+def read(file_name: str) -> str:
+    return open(
+        os.path.join(
+            os.path.dirname(__file__),
+            file_name
+        ),
+        encoding='utf-8'
+    ).read()
 
 
 setup(
     # Basic package information:
     name='http-basic-auth',
-    version='1.2.0',
+    version='2.0.0',
     py_modules=('http_basic_auth',),
 
     # Packaging options:
@@ -25,8 +31,8 @@ setup(
         'License :: OSI Approved :: BSD License',
         'Programming Language :: Python',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
     ],
 
     # Package dependencies:
@@ -42,5 +48,5 @@ setup(
     url='https://github.com/bugov/http-basic-auth',
     keywords='security basic auth http',
     description='HTTP Basic Auth implementation',
-    long_description=read('readme.md'),
+    long_description=read('readme.rst'),
 )
