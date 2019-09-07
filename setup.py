@@ -49,5 +49,5 @@ setup(
     url='https://github.com/bugov/http-basic-auth',
     keywords='security basic auth http',
     description='HTTP Basic Auth implementation',
-    long_description=read('readme.md'),
+    long_description=read('readme.rst'),
 )
