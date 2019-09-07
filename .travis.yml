@@ -11,4 +11,6 @@ install:
   - pip install -U pip setuptools
   - pip install -r requirements-dev.txt
 script:
-  - tox
+  - pytest -x --cov=http_basic_auth --no-cov-on-fail
+  - coverage html --fail-under=100
+  - mypy --ignore-missing-imports http_basic_auth setup.py
